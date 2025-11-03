@@ -18,7 +18,7 @@
     <section>
         <div>
             <img class="imagen" src="imagenes/salud.png" alt="" width="50px " height="50px">
-            <h1>Blood Bank System</h1>
+            <h1>Blood Bank System!</h1>
         </div>
         <p>Un simple gesto puede marcar la diferencia entre la vida y la muerte.“Tu sangre puede salvar vidas. </p>
 
