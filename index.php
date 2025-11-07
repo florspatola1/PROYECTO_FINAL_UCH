@@ -22,7 +22,7 @@
         </div>
         <p>Un simple gesto puede marcar la diferencia entre la vida y la muerte.“Tu sangre puede salvar vidas. </p>
 
-        <a class="boton" href="pages/login.php">Ingresar!</a>
+        <a class="boton" href="pages/login.php">Ingresar!  </a>
 
     </section>
 </body>
