@@ -1,7 +1,3 @@
-/* ====================================
-   ESTILOS GLOBALES - BLOOD BANK SYSTEM
-   ==================================== */
-
 * {
     margin: 0;
     padding: 0;
@@ -13,9 +9,7 @@ body {
     font-family: Arial, sans-serif;
 }
 
-/* ====================================
-   HEADER - ESTILO ROJO CONSISTENTE
-   ==================================== */
+
 
 .header {
     background: rgb(230, 54, 54);
@@ -62,9 +56,7 @@ body {
     font-weight: 500;
 }
 
-/* ====================================
-   CARDS
-   ==================================== */
+
 
 .card {
     border: none;
@@ -79,9 +71,7 @@ body {
     padding: 20px;
 }
 
-/* ====================================
-   BOTONES
-   ==================================== */
+
 
 .btn-primary {
     background: rgb(230, 54, 54);
@@ -138,9 +128,7 @@ btn-dark:hover {
     background: #23272b;
 }
 
-/* ====================================
-   FORMULARIOS
-   ==================================== */
+
 
 .form-label {
     font-weight: 600;
@@ -161,9 +149,7 @@ btn-dark:hover {
     box-shadow: 0 0 0 0.2rem rgba(230, 54, 54, 0.25);
 }
 
-/* ====================================
-   ALERTS
-   ==================================== */
+
 
 .alert {
     border-radius: 5px;
@@ -187,9 +173,7 @@ btn-dark:hover {
     color: #155724;
 }
 
-/* ====================================
-   BADGES
-   ==================================== */
+
 
 .badge {
     padding: 8px 12px;
@@ -216,17 +200,12 @@ btn-dark:hover {
     color: #fff;
 }
 
-/* ====================================
-   TABLAS
-   ==================================== */
+
 
 .table-hover tbody tr:hover {
     background-color: #f8f9fa;
 }
 
-/* ====================================
-   INFO BOX
-   ==================================== */
 
 .info-box {
     background: #e7f3ff;
@@ -235,10 +214,6 @@ btn-dark:hover {
     border-radius: 5px;
     margin-bottom: 20px;
 }
-
-/* ====================================
-   UTILIDADES
-   ==================================== */
 
 .text-muted {
     color: #6c757d;

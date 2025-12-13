@@ -132,12 +132,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     </div>
 
     <div class="container">
-        <?php if ($mensaje): ?>
+        <?php if ($mensaje){ ?>
             <div class="alert alert-<?= $tipoMensaje ?> alert-dismissible fade show" role="alert">
                 <?php echo ($mensaje) ?>
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             </div>
-        <?php endif; ?>
+        <?php }?>
 
       
         <div class="card mb-4">
@@ -168,10 +168,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             <div class="card-body">
                 <form method="POST">
                     <input type="hidden" name="action" value="realizar_consulta">
-                    <?php if ($turno_id): ?>
+                    <?php if ($turno_id) { ?>
                         <input type="hidden" name="turno_id" value="<?php echo ($turno_id); ?>">
-                    <?php endif; ?>
-
+                    <?php } ?>
+              
                     <div class="info-box">
                         <i class="fas fa-info-circle me-2"></i>
                         <strong>Complete todos los campos para registrar la evaluación médica del donante:</strong>

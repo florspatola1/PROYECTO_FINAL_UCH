@@ -195,15 +195,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                             </tr>
                         </thead>
                         <tbody>
-                            <?php if (empty($usuarios)): ?>
+                            <?php if (empty($usuarios)){ ?>
                                 <tr>
                                     <td colspan="9" class="text-center py-4">
                                         <i class="fas fa-user-slash fa-3x text-muted mb-3"></i>
                                         <p class="text-muted">No hay usuarios registrados</p>
                                     </td>
                                 </tr>
-                            <?php else: ?>
-                                <?php foreach ($usuarios as $usuario): ?>
+                            <?php }else{ ?>
+                                <?php foreach ($usuarios as $usuario){ ?>
                                     <tr>
                                         <td><?php echo $usuario['id']; ?></td>
                                         <td><?php echo $usuario['nombre'] . ' ' . $usuario['apellido']; ?></td>
@@ -211,20 +211,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                                         <td><?php echo $usuario['dni']; ?></td>
                                         <td><?php echo $usuario['telefono'] ?: 'No disponible'; ?></td>
                                         <td><?php echo $usuario['edad'] ?: 'No especificada'; ?></td>
-                                        <td>
-                                            <?php
-                                            $rolColors = [
-                                                'donante' => 'badge bg-info',
-                                                'administrador' => 'badge bg-warning',
-                                                'master' => 'badge bg-danger'
-                                            ];
-                                            $badgeClass = $rolColors[$usuario['rol']] ?? 'badge bg-secondary';
-                                            ?>
-                                            <span class="<?php echo $badgeClass ?>"><?php echo ucfirst($usuario['rol']) ?></span>
-                                        </td>
+                                        <td><?php echo $usuario['rol'] ?: 'No especificado'; ?></td>
 
                                         <td>
-                                            <?php if ($usuario['id'] != $_SESSION['user_id']): ?>
+                                            <?php if ($usuario['id'] != $_SESSION['user_id']){ ?>
                                                 <form method="POST" onsubmit="return confirm('¿Estás seguro de eliminar este usuario?')">
                                                     <input type="hidden" name="usuario_id" value="<?php echo $usuario['id']; ?>">
                                                     <input type="hidden" name="action" value="eliminar">
@@ -232,13 +222,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                                                         <i class="fas fa-trash"></i>
                                                     </button>
                                                 </form>
-                                            <?php else: ?>
-                                                <span class="text-muted">N/A</span>
-                                            <?php endif; ?>
+                                            <?php }else{ ?>
+                                                <span class="text-muted">---</span>
+                                            <?php }?>
                                         </td>
                                     </tr>
-                                <?php endforeach; ?>
-                            <?php endif; ?>
+                                <?php } ?>
+                            <?php } ?>
                         </tbody>
                     </table>
                 </div>

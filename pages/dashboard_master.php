@@ -51,9 +51,7 @@ try {
 
     <div class="container mt-4">
         <?php
-        $mensaje = '';
-        $tipoMensaje = '';
-
+     
         // Obtener estadísticas generales
         $consulta_total_usuarios = $pdo->prepare("SELECT COUNT(*) as total FROM usuarios");
         $consulta_total_usuarios->execute();
@@ -76,15 +74,6 @@ try {
         $totalEvaluaciones = $consulta_total_evaluaciones->fetch()['total_evaluaciones'];
 
         ?>
-
-        <?php if ($mensaje): ?>
-            <div class="alert alert-<?= $tipoMensaje ?> alert-dismissible fade show" role="alert">
-                <i class="fas fa-<?= $tipoMensaje === 'success' ? 'check-circle' : 'exclamation-triangle' ?> me-2"></i>
-                <?php echo ($mensaje) ?>
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-            </div>
-        <?php endif; ?>
-
 
         <div class="row mb-4">
             <div class="col-md-2">
@@ -148,7 +137,7 @@ try {
                             <div class="col-md-8">
                                 <p><strong>Usuario:</strong> <?php echo ($_SESSION['user_name']) ?></p>
                                 <p><strong>Email:</strong> <?php echo ($_SESSION['user_email']) ?></p>
-                                <p><strong>Rol:</strong> <?php echo ($_SESSION['rol']) ?></p>
+                                <p><strong>Rol:</strong> <?php echo ($_SESSION['user_role']) ?></p>
 
                             </div>
                             <div class="col-md-4">

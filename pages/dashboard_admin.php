@@ -75,11 +75,11 @@ $turnos = $consulta_turnos->fetchAll(PDO::FETCH_ASSOC);
                 <h4 class="mb-0"><i class="fas fa-list me-2"></i>Gestión de Turnos</h4>
             </div>
             <div class="card-body">
-                <?php if (empty($turnos)): ?>
+                <?php if (empty($turnos)){ ?>
                     <div class="alert alert-info" role="alert">
                         <i class="fas fa-info-circle me-2"></i>No hay turnos registrados.
                     </div>
-                <?php else: ?>
+                <?php }else{ ?>
                     <div class="table-responsive">
                         <table class="table table-hover">
                             <thead>
@@ -96,7 +96,7 @@ $turnos = $consulta_turnos->fetchAll(PDO::FETCH_ASSOC);
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php foreach ($turnos as $turno): ?>
+                                <?php foreach ($turnos as $turno){?>
                                     <tr>
                                         <td><?php echo $turno['id']; ?></td>
                                         <td><?php echo ($turno['nombre'] . ' ' . $turno['apellido']); ?></td>
@@ -105,27 +105,15 @@ $turnos = $consulta_turnos->fetchAll(PDO::FETCH_ASSOC);
                                         <td><?php echo date('d/m/Y', strtotime($turno['fecha'])); ?></td>
                                         <td><?php echo ($turno['hora']); ?></td>
                                         <td><?php echo ($turno['motivo'] ?? '-'); ?></td>
-                                        <td>
-                                            <?php
-                                            $estados = [
-                                                'pendiente' => ['badge' => 'warning', 'text' => 'Pendiente'],
-                                                'confirmado' => ['badge' => 'success', 'text' => 'Confirmado'],
-                                                'cancelado' => ['badge' => 'danger', 'text' => 'Cancelado'],
-                                                'rechazado' => ['badge' => 'danger', 'text' => 'Rechazado'],
-                                                'realizado' => ['badge' => 'info', 'text' => 'Realizado']
-                                            ];
-                                            $estado = $estados[$turno['estado']] ?? ['badge' => 'secondary', 'text' => $turno['estado']];
-                                            ?>
-                                            <span class="badge bg-<?= $estado['badge'] ?>"><?= $estado['text'] ?></span>
-                                        </td>
+                                        <td><?php echo ($turno['estado'] ?? '-'); ?></td>
                                         <td>
                                             <div class="btn-group" role="group">
                                                 
+                                                <?php if ($turno['estado'] != 'cancelado' && $turno['estado'] != 'realizado'){ ?>
                                                 <a href="consulta_medica.php?donante_id=<?php echo $turno['donante_id']; ?>&turno_id=<?php echo $turno['id']; ?>" class="btn btn-sm btn-primary me-2" title="Realizar consulta médica">
                                                     <i class="fas fa-stethoscope"></i>
                                                 </a>
                                                 
-                                                <?php if ($turno['estado'] !== 'cancelado'): ?>
                                                     <form method="POST" style="display: inline;">
                                                         <input type="hidden" name="turno_id" value="<?php echo $turno['id']; ?>">
                                                         <input type="hidden" name="action" value="cancelar_turno">
@@ -133,15 +121,15 @@ $turnos = $consulta_turnos->fetchAll(PDO::FETCH_ASSOC);
                                                             <i class="fas fa-times"></i>
                                                         </button>
                                                     </form>
-                                                <?php endif; ?>
+                                                <?php } ?>
                                             </div>
                                         </td>
                                     </tr>
-                                <?php endforeach; ?>
+                                <?php } ?>
                             </tbody>
                         </table>
                     </div>
-                <?php endif; ?>
+                <?php } ?>
             </div>
         </div>
     </div>

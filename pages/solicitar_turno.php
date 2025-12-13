@@ -78,12 +78,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 
     <div class="container">
-        <?php if ($mensaje): ?>
+        <?php if ($mensaje){ ?>
             <div class="alert alert-<?= $tipoMensaje ?> alert-dismissible fade show" role="alert">
                 <?php echo ($mensaje) ?>
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             </div>
-        <?php endif; ?>
+        <?php } ?>
 
         <div class="card">
             <div class="card-header">

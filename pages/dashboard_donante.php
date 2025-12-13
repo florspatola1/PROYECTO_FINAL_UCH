@@ -71,11 +71,11 @@ $turnos = $consulta_turnos->fetchAll(PDO::FETCH_ASSOC);
                 <h5 class="mb-0"><i class="fas fa-list me-2"></i>Mis Turnos</h5>
             </div>
             <div class="card-body">
-                <?php if (empty($turnos)): ?>
+                <?php if (empty($turnos)){ ?>
                     <div class="alert alert-danger" role="alert">
                         <i class="fas fa-info-circle me-2"></i>No tienes turnos programados. ¡Solicita uno ahora!
                     </div>
-                <?php else: ?>
+                <?php }else{ ?>
                     <div class="table-responsive">
                         <table class="table table-hover">
                             <thead>
@@ -88,31 +88,19 @@ $turnos = $consulta_turnos->fetchAll(PDO::FETCH_ASSOC);
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php foreach ($turnos as $turno): ?>
+                                <?php foreach ($turnos as $turno){ ?>
                                     <tr>
                                         <td><?php echo date('d/m/Y', strtotime($turno['fecha'])); ?></td>
                                         <td><?php echo ($turno['hora']); ?></td>
                                         <td><?php echo ($turno['motivo'] ?? '-'); ?></td>
-                                        <td>
-                                            <?php
-                                            $estados = [
-                                                'pendiente' => ['badge' => 'warning', 'text' => 'Pendiente'],
-                                                'confirmado' => ['badge' => 'success', 'text' => 'Confirmado'],
-                                                'cancelado' => ['badge' => 'danger', 'text' => 'Cancelado']
-                                            ];
-                                            $estado = $estados[$turno['estado']] ?? ['badge' => 'secondary', 'text' => $turno['estado']];
-                                            ?>
-                                            <span class="badge bg-<?php echo $estado['badge']; ?>">
-                                                <?php echo $estado['text']; ?>
-                                            </span>
-                                        </td>
+                                        <td><?php echo ($turno['estado'] ?? '-') ?> </td>
                                         <td><?php echo ($turno['observaciones'] ?? '-'); ?></td>
                                     </tr>
-                                <?php endforeach; ?>
+                                <?php } ?>
                             </tbody>
                         </table>
                     </div>
-                <?php endif; ?>
+                <?php } ?>
             </div>
 
         </div>
