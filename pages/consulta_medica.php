@@ -67,30 +67,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         $mensaje = 'Por favor, complete todos los campos requeridos.';
         $tipoMensaje = 'danger';
     } else {
-        // Obtener turno_id del formulario (en caso de que se pase por POST también)
-        $turno_id_form = $_POST['turno_id'] ?? $turno_id;
-
         // Insertar evaluación médica
         $consulta_evaluacion_medica = $pdo->prepare("
             INSERT INTO evaluaciones_medicas 
             (donante_id, turno_id, fecha_evaluacion, peso, altura, presion_arterial, frecuencia_cardiaca, apto_para_donar, observaciones, evaluado_por) 
             VALUES (?, ?, CURDATE(), ?, ?, ?, ?, ?, ?, ?)
         ");
-        if ($consulta_evaluacion_medica->execute([$donante_id, $turno_id_form, $peso, $altura, $presion_arterial, $frecuencia_cardiaca, $apto_para_donar, $observaciones, $_SESSION['user_id']])) {
-            // Si hay un turno asociado, actualizar su estado según el resultado de la evaluación
-            if ($turno_id_form) {
-                $nuevo_estado = $apto_para_donar ? 'realizado' : 'rechazado';
-                $consulta_turno_actualizar_estado = $pdo->prepare("UPDATE turnos SET estado = ? WHERE id = ?");
-                $consulta_turno_actualizar_estado->execute([$nuevo_estado, $turno_id_form]);
+        if ($consulta_evaluacion_medica->execute([$donante_id, $turno_id, $peso, $altura, $presion_arterial, $frecuencia_cardiaca, $apto_para_donar, $observaciones, $_SESSION['user_id']])) {
+            $nuevo_estado = 'realizado';
 
-                if ($apto_para_donar) {
+                if($apto_para_donar == '1'){
                     $_SESSION['mensaje_exito'] = 'Consulta médica guardada exitosamente. El turno ha sido marcado como realizado.';
-                } else {
+                }else{
+                    $nuevo_estado = 'rechazado';
                     $_SESSION['mensaje_exito'] = 'Consulta médica guardada exitosamente. El turno ha sido rechazado debido a la evaluación negativa.';
                 }
-            } else {
-                $_SESSION['mensaje_exito'] = 'Consulta médica guardada exitosamente.';
-            }
+                $consulta_turno_actualizar_estado = $pdo->prepare("UPDATE turnos SET estado = ? WHERE id = ?");
+                $consulta_turno_actualizar_estado->execute([$nuevo_estado, $turno_id]);
+            
+
             // Redirigir al dashboard del administrador
             header('Location: dashboard_admin.php');
             exit;
