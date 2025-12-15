@@ -52,7 +52,7 @@ if ($turno_id) {
 
 // Variables para mensajes
 $mensaje = '';
-$tipoMensaje = '';
+
 
 // Procesar formulario de consulta médica y entrevista medica
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'realizar_consulta') {
@@ -63,10 +63,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     $apto_para_donar = $_POST['apto_para_donar'] ?? '0';
     $observaciones = $_POST['observaciones'] ?? '';
 
-    if (empty($peso) || empty($altura) || empty($presion_arterial) || empty($frecuencia_cardiaca)) {
-        $mensaje = 'Por favor, complete todos los campos requeridos.';
-        $tipoMensaje = 'danger';
-    } else {
         // Insertar evaluación médica
         $consulta_evaluacion_medica = $pdo->prepare("
             INSERT INTO evaluaciones_medicas 
@@ -90,10 +86,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             header('Location: dashboard_admin.php');
             exit;
         } else {
-            $mensaje = 'Error al guardar la consulta médica.';
-            $tipoMensaje = 'danger';
+            $mensaje = 'Error al guardar la consulta médica en la base de datos.';
+             echo($mensaje);
+            die();
         }
-    }
+    
 }
 ?>
 <!DOCTYPE html>
@@ -126,15 +123,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         </div>
     </div>
 
-    <div class="container">
-        <?php if ($mensaje){ ?>
-            <div class="alert alert-<?= $tipoMensaje ?> alert-dismissible fade show" role="alert">
-                <?php echo ($mensaje) ?>
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-            </div>
-        <?php }?>
-
-      
+    <div class="container"> 
         <div class="card mb-4">
             <div class="card-header">
                 <h4 class="mb-0"><i class="fas fa-user me-2"></i>Información del Donante</h4>

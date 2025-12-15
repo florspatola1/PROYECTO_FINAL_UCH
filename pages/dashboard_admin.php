@@ -109,7 +109,7 @@ $turnos = $consulta_turnos->fetchAll(PDO::FETCH_ASSOC);
                                         <td>
                                             <div class="btn-group" role="group">
                                                 
-                                                <?php if ($turno['estado'] != 'cancelado' && $turno['estado'] != 'realizado' && $turno['rechazado']){ ?>
+                                                <?php if ($turno['estado'] != 'cancelado' && $turno['estado'] != 'realizado' && $turno['estado'] != 'rechazado'){ ?>
                                                 <a href="consulta_medica.php?donante_id=<?php echo $turno['donante_id']; ?>&turno_id=<?php echo $turno['id']; ?>" class="btn btn-sm btn-primary me-2" title="Realizar consulta médica">
                                                     <i class="fas fa-stethoscope"></i>
                                                 </a>

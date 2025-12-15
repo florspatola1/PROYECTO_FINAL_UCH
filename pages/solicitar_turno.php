@@ -22,30 +22,25 @@ try {
 
 // Variables para mensajes de alertas
 $mensaje = '';
-$tipoMensaje = '';
+
 
 // Procesar formulario de solicitud de turno
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $fecha = $_POST['fecha'] ?? '';
     $hora = $_POST['hora'] ?? '';
     $motivo = trim($_POST['motivo'] ?? '');
-
-    if (empty($fecha) || empty($hora) || empty($motivo)) {
-        $mensaje = 'Por favor, complete todos los campos.';
-        $tipoMensaje = 'danger';
-    } else {
         // Insertar turno
         $consulta_turno_solicitar = $pdo->prepare("INSERT INTO turnos (donante_id, fecha, hora, motivo, estado) VALUES (?, ?, ?, ?, 'pendiente')");
         if ($consulta_turno_solicitar->execute([$_SESSION['user_id'], $fecha, $hora, $motivo])) {
-            $mensaje = 'Turno solicitado exitosamente.';
-            $tipoMensaje = 'success';
             // Limpiar campos después de 2 segundos y redirigir a la dashboard del donante
             echo "<script>setTimeout(() => window.location.href = 'dashboard_donante.php', 2000);</script>";
         } else {
             $mensaje = 'Error al solicitar el turno.';
-            $tipoMensaje = 'danger';
+            echo($mensaje);
+            die();
+            
         }
-    }
+    
 }
 ?>
 <!DOCTYPE html>

@@ -22,7 +22,6 @@ try {
 
 // Variables para mensajes
 $mensaje = '';
-$tipoMensaje = '';
 
 // Procesar formulario de crear usuario
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['accion']) && $_POST['accion'] === 'crear_usuario') {
@@ -34,19 +33,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['accion']) && $_POST['
     $email = trim($_POST['email'] ?? '');
     $password = $_POST['password'] ?? '';
     $rol = $_POST['rol'] ?? 'donante';
-
-    if (empty($nombre) || empty($apellido) || empty($dni) || empty($edad) || empty($telefono) || empty($email) || empty($password)) {
-        $mensaje = 'Por favor, complete todos los campos.';
-        $tipoMensaje = 'danger';
-    } else {
         // Verificar si el email o DNI ya existen
         $consulta_usuario_verificar = $pdo->prepare("SELECT id FROM usuarios WHERE email = ? OR dni = ?");
         $consulta_usuario_verificar->execute([$email, $dni]);
         $existe = $consulta_usuario_verificar->fetch(PDO::FETCH_ASSOC);
 
         if ($existe) {
-            $mensaje = 'El email o DNI ya están en uso.';
-            $tipoMensaje = 'danger';
+            echo "<script>alert('El email o DNI ya están en uso.');</script>";
         } else {
             // encriptar la contraseña
             $contrasenaEncriptada = password_hash($password, PASSWORD_DEFAULT);
@@ -54,14 +47,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['accion']) && $_POST['
             // Insertar usuario
             $consulta_usuario_insertar = $pdo->prepare("INSERT INTO usuarios (nombre, apellido, dni, edad, telefono, email, password, rol) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
             if ($consulta_usuario_insertar->execute([$nombre, $apellido, $dni, $edad, $telefono, $email, $contrasenaEncriptada, $rol])) {
-                $mensaje = 'Usuario creado exitosamente.';
-                $tipoMensaje = 'success';
+                echo "<script>alert('Usuario creado correctamente');</script>";
             } else {
-                $mensaje = 'Error al crear el usuario.';
-                $tipoMensaje = 'danger';
+                echo "<script>alert('Error al crear usuario');</script>";
             }
         }
-    }
+    
 }
 
 
@@ -71,11 +62,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     if ($usuario_id != $_SESSION['user_id']) {
         $consulta_usuario_eliminar = $pdo->prepare("DELETE FROM usuarios WHERE id = ?");
         $consulta_usuario_eliminar->execute([$usuario_id]);
-        $mensaje = 'Usuario eliminado exitosamente.';
-        $tipoMensaje = 'success';
     } else {
         $mensaje = 'No puedes eliminar tu propio usuario.';
-        $tipoMensaje = 'danger';
+        echo($mensaje);
+        die();
     }
 }
 ?>
@@ -107,12 +97,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     </div>
 
     <div class="container mt-4">
-        <?php if ($mensaje): ?>
-            <div class="alert alert-<?= $tipoMensaje ?> alert-dismissible fade show" role="alert">
-                <?php echo ($mensaje) ?>
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-            </div>
-        <?php endif; ?>
          <div class="card mb-4">
             <div class="card-header">
                 <h5 class="mb-0"><i class="fas fa-user-plus me-2"></i>Crear Nuevo Usuario</h5>
