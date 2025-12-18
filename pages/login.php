@@ -83,10 +83,8 @@ try {
                             }
                             echo "<script>setTimeout(() => window.location.href = '$dashboard', 1500);</script>";
                         } else {
-                            echo "<div class='alert alert-error'>Email o contraseña incorrectos</div>";
+                            echo "<script>alert('Email incorrecto');</script>";
                         }
-                    } else {
-                        echo "<div class='alert alert-error'>Por favor complete todos los campos</div>";
                     }
                 }
                 ?>
