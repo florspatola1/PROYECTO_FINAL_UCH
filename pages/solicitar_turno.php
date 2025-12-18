@@ -32,8 +32,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Insertar turno
         $consulta_turno_solicitar = $pdo->prepare("INSERT INTO turnos (donante_id, fecha, hora, motivo, estado) VALUES (?, ?, ?, ?, 'pendiente')");
         if ($consulta_turno_solicitar->execute([$_SESSION['user_id'], $fecha, $hora, $motivo])) {
+            echo("<script>alert('turno solicitado correctamente');</script>");
             // Limpiar campos después de 2 segundos y redirigir a la dashboard del donante
-            echo "<script>setTimeout(() => window.location.href = 'dashboard_donante.php', 2000);</script>";
+            echo "<script>setTimeout(() => window.location.href = 'dashboard_donante.php', 500);</script>";
         } else {
             $mensaje = 'Error al solicitar el turno.';
             echo($mensaje);
@@ -73,13 +74,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 
     <div class="container">
-        <?php if ($mensaje){ ?>
-            <div class="alert alert-<?= $tipoMensaje ?> alert-dismissible fade show" role="alert">
-                <?php echo ($mensaje) ?>
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-            </div>
-        <?php } ?>
-
         <div class="card">
             <div class="card-header">
                 <h4 class="mb-0"><i class="fas fa-calendar-plus me-2"></i>Solicitar Nuevo Turno</h4>

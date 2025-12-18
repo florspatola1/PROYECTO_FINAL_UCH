@@ -62,6 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     if ($usuario_id != $_SESSION['user_id']) {
         $consulta_usuario_eliminar = $pdo->prepare("DELETE FROM usuarios WHERE id = ?");
         $consulta_usuario_eliminar->execute([$usuario_id]);
+        echo "<script>alert('usuario eliminado correctamente');</script>";
     } else {
         $mensaje = 'No puedes eliminar tu propio usuario.';
         echo($mensaje);
